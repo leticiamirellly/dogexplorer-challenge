@@ -1,75 +1,33 @@
-# Alvorada Dev DogExplorer — Front-end 🐶
+# DogExplorer — Full-Stack Monorepo
 
-SPA in Vue 3 + TypeScript to browse dog breeds, bookmark favorites and display images.  
-Structured for performance, visual consistency and easy evolution.
+Vue 3 **frontend** + Fastify 4 **backend**, orchestrated by **Docker Compose**.  
+Explore dog breeds, mark favorites (stored in PostgreSQL, cached in Redis) and enjoy instant image loading via SWR.
 
 
-## ✨ Features
+## Structure
 
-| View            | What it does                                                                |
-|-----------------|---------------------------------------------------------------------------|
-| **home**        | Lists all available breeds (data from Dog CEO API via backend).           |
-| **Modal**       | Shows 3 random images of the selected breed.                              |
-| **Favorites**   | Adds/removes breeds as favorites. If the backend is offline, use `localStorage`. |
-| **UX**          | Loading states, friendly error messages, full-width responsive layout. |
+├── frontend # Vue 3 • Vite • Pinia • Vitest
+├── backend # Fastify 4 • TypeScript • Postgres • Redis • Vitest
+└── docker-compose.yml
 
-## 🛠️ Stack
 
-- **Vue 3** + Composition API  
-- **TypeScript**  
-- **Vite** (Hot-Module Reload)  
-- **Pinia** 
-- **Axios** Composable `useApi()`  
-- **Tailwind CSS** With design-tokens and utility components
-- **Zod** for light validations
+## ⚡ Quick Start
 
-## ⚙️ Prerequisites
 
-- **Node >= 20**
-- **npm >= 8**  
-
-## Project Setup
+# spin up whole stack (SPA → http://localhost, API → http://localhost:3000)
 
 ```sh
+docker compose up -d --build
+```sh
+
+# one-time install (npm workspaces)
 npm install
-```
 
-### Start development environment
+# hot-reload frontend
+npm --workspace=frontend run dev
 
-```sh
-npm run dev # Open http://localhost:5173
-```
+# hot-reload backend
+npm --workspace=backend run dev
 
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Run Unit Tests with [Vitest](https://vitest.dev/)
-
-```sh
-npm run test:unit
-```
-
-### Run End-to-End Tests with [Cypress](https://www.cypress.io/)
-
-```sh
-npm run test:e2e:dev
-```
-
-This runs the end-to-end tests against the Vite development server.
-It is much faster than the production build.
-
-But it's still recommended to test the production build with `test:e2e` before deploying (e.g. in CI environments):
-
-```sh
-npm run build
-npm run test:e2e
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+npm --workspace=frontend run test      # UI + contract
+npm --workspace=backend  run test      # unit + contract

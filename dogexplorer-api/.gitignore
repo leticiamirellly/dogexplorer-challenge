@@ -1,0 +1,45 @@
+# ───────────────────────────────
+#  Global
+# ───────────────────────────────
+.DS_Store
+Thumbs.db
+.env*
+!.env.example
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+*.local
+
+# ───────────────────────────────
+#  Node / PNPM / Yarn
+# ───────────────────────────────
+node_modules/
+.pnpm-store/
+.yarn/
+.yarnrc.yml
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# ───────────────────────────────
+#  TypeScript
+# ───────────────────────────────
+dist/
+*.tsbuildinfo
+
+
+coverage/
+.pact
+pacts/
+.vitest
+.vscode-test/
+
+
+logs/
+*.log
+*.sqlite
+*.sqlite-journal
+
+*.tar
+**/Dockerfile*~
+docker-data/
