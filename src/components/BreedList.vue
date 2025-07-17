@@ -3,7 +3,7 @@
 		<li v-for="breed in safeBreeds" :key="breed"
 			class="card flex items-center justify-between gap-2 cursor-pointer select-none transition hover:bg-neutral-100"
 			@click="$emit('select', breed)">
-			<span class="capitalize truncate">{{ breed }}</span>
+			<span class="capitalize gray-200 truncate">{{ breed }}</span>
 
 			<BaseButton v-if="showFav" variant="outline" class="!p-1 text-lg leading-none"
 				:aria-label="isFav(breed) ? 'Remover dos favoritos' : 'Adicionar aos favoritos'"
@@ -18,6 +18,7 @@
 import { computed } from 'vue';
 import { useFavoritesStore } from '@/stores/favorites';
 import BaseButton from '@/components/ui/BaseButton.vue';
+import { storeToRefs } from 'pinia';
 
 defineEmits<{ select: [string] }>();
 
@@ -25,6 +26,14 @@ const props = withDefaults(
 	defineProps<{ breeds: string[] | string; showFav?: boolean }>(),
 	{ showFav: false },
 );
+
+const fav         = useFavoritesStore();
+const { breeds: favBreeds } = storeToRefs(fav); 
+
+const isFav  = (b: string) => favBreeds.value.includes(b);
+const toggle = (b: string) => fav.toggle(b);
+
+
 const safeBreeds = computed<string[]>(() => {
 	if (Array.isArray(props.breeds)) return props.breeds;
 	try {
@@ -34,9 +43,4 @@ const safeBreeds = computed<string[]>(() => {
 		return props.breeds.split(',').map(s => s.trim()).filter(Boolean);
 	}
 });
-
-const fav = useFavoritesStore();
-
-const isFav = (b: string) => fav.breeds.includes(b);
-const toggle = (b: string) => fav.toggle(b);
 </script>

@@ -16,9 +16,23 @@ import { ref, onMounted } from 'vue';
 import { useFavoritesStore } from '@/stores/favorites';
 import BreedList from '@/components/BreedList.vue';
 import BreedModal from '@/components/BreedModal.vue';
+import { useApi } from '@/composables/useApi';
 
 const fav = useFavoritesStore();
 const selected = ref<string | null>(null);
+const api = useApi();
 
-onMounted(() => { if (!fav.breeds.length) fav.load(); });
+const loading  = ref(false);
+const error    = ref<Error | null>(null);
+
+onMounted(async () => {
+	loading.value = true;
+	try {
+    await fav.load();
+	} catch (e) {
+    error.value = e as Error;
+	} finally {
+    loading.value = false;
+	}
+});
 </script>

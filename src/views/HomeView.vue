@@ -16,8 +16,10 @@ import { ref, onMounted } from 'vue';
 import { useApi } from '@/composables/useApi';
 import BreedList from '@/components/BreedList.vue';
 import BreedModal from '@/components/BreedModal.vue';
+import { useFavoritesStore } from '@/stores/favorites';
 
 const api = useApi();
+const fav = useFavoritesStore();
 const breeds = ref<string[]>([]);
 const loading = ref(false);
 const error = ref<Error | null>(null);
@@ -26,7 +28,8 @@ const selected = ref<string | null>(null);
 onMounted(async () => {
   loading.value = true;
   try {
-    const data = await api.get('/breeds');
+    await fav.load();
+    const data = await api.get('/api/breeds');
 
     if (!Array.isArray(data))
       throw new Error('Resposta inesperada do servidor (/breeds)');

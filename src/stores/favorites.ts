@@ -16,7 +16,7 @@ export const useFavoritesStore = defineStore('favorites', () => {
 	async function load() {
 		loading.value = true;
 		try {
-			breeds.value = await api.get<string[]>('/favorites');
+			breeds.value = await api.get<string[]>('/api/favorites');
 		} catch (e) {
 			error.value = e as Error;
 
@@ -31,9 +31,9 @@ export const useFavoritesStore = defineStore('favorites', () => {
 
 		try {
 			if (isFav) {
-				await api.del(`/favorites/${breed}`);
+				await api.del(`/api/favorites/${breed}`);
 			} else {
-				await api.post('/favorites', { breed });
+				await api.post('/api/favorites', { breed });
 			}
 		} catch (e) {
 			if (!(e instanceof ApiError && e.isOffline)) throw e;

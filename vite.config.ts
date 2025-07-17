@@ -14,15 +14,12 @@ export default defineConfig(({ mode }) => {
       vueDevTools(),
     ],
     server: {
-      proxy: backend
-        ? {
-          '/api': {
-            target: backend,
-            changeOrigin: true,
-            secure: false,
-          },
-        }
-        : undefined,
+      proxy: {
+        '/api': {
+          target: 'http://localhost:3000',
+          changeOrigin: true,
+        },
+      },
     },
     test: {
       environment: 'happy-dom',

@@ -3,7 +3,7 @@
 		<div class="bg-white rounded-xl p-4 w-11/12 sm:max-w-lg">
 			<header class="flex justify-between mb-4">
 				<h2 class="text-xl font-semibold capitalize">{{ breed }}</h2>
-				<button @click="$emit('close')">✕</button>
+				<button class="btn" @click="$emit('close')"><span>✕</span></button>
 			</header>
 
 			<p v-if="loading" class="text-gray-500">Carregando imagens…</p>
